@@ -1,21 +1,15 @@
 package br.com.soat.notification.core.usecase
 
+import br.com.soat.notification.core.entities.Notification
 import br.com.soat.notification.core.entities.NotificationRequest
+import br.com.soat.notification.core.gateways.IEmailGateway
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 
+class SendEmailUseCase(private val gateway: IEmailGateway) {
 
-class SendEmailUseCase(
-    private val javaMail: JavaMailSender,
-) {
-
-    fun execute(notification: NotificationRequest){
-        val message = SimpleMailMessage()
-        message.from = "lucasdrop169@gmail.com"
-        message.setTo(notification.email)
-        message.subject = notification.title
-        message.text = "Todo troxa recebe esse email"
-        javaMail.send(message)
+    fun execute(notification: NotificationRequest): Notification {
+        return gateway.sendEmail(notification)
     }
 
 }
