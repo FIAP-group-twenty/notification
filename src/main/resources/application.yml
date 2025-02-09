@@ -1,0 +1,16 @@
+server:
+  servlet:
+    context-path: /api/notifications
+spring:
+  mail:
+    host: email-smtp.us-east-1.amazonaws.com
+    port: 587
+    username: AKIAWMEFERHDAWVKUJLW
+    password: BMP+wwqCgAhsj2nuUzaRotWxD2SvTLqUacY823deGzI3
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
