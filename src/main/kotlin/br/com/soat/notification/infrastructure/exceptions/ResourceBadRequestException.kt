@@ -1,4 +1,4 @@
-package br.com.soat.notification.core.exceptions
+package br.com.soat.notification.infrastructure.exceptions
 
 import br.com.soat.notification.infrastructure.api.entities.ErrorResponse
 

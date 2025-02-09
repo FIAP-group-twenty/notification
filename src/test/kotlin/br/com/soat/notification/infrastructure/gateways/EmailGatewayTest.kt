@@ -1,6 +1,7 @@
 package br.com.soat.notification.infrastructure.gateways
 
 import br.com.soat.notification.core.entities.NotificationRequest
+import br.com.soat.notification.core.entities.Status
 import br.com.soat.notification.infrastructure.api.client.IEmailDataSource
 import io.mockk.every
 import io.mockk.mockk
@@ -16,7 +17,7 @@ class EmailGatewayTest {
 
     @Test
     fun `sendEmail should call sendEmail on dataSource and return Notification`() {
-        val request = NotificationRequest("user@example.com", "pending", "New Notification")
+        val request = NotificationRequest("user@example.com", Status.SUCCESS, "New Notification", "New message")
         val simpleMailMessage = SimpleMailMessage().apply {
          setTo(request.email)
         }

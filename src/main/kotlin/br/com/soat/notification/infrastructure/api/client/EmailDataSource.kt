@@ -15,7 +15,7 @@ class EmailDataSource(private val javaMail: JavaMailSender) : IEmailDataSource {
             message.from = "lucasdrop169@gmail.com"
             message.setTo(request.email)
             message.subject = request.title
-            message.text = "Todo troxa recebe esse email"
+            message.text = request.message
             javaMail.send(message)
             return message
         } catch (ex: Exception) {

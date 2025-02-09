@@ -1,6 +1,7 @@
 package br.com.soat.notification.infrastructure.api.client
 
 import br.com.soat.notification.core.entities.NotificationRequest
+import br.com.soat.notification.core.entities.Status
 import br.com.soat.notification.infrastructure.exceptions.ResourceInternalServerException
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +19,7 @@ class EmailDataSourceTest {
 
     @Test
     fun `sendEmail should send email and return SimpleMailMessage`() {
-        val request = NotificationRequest("user@example.com", "pending", "New Notification")
+        val request = NotificationRequest("user@example.com", Status.PENDING, "New Notification", "message")
         every { javaMailSender.send(any<SimpleMailMessage>()) } returns Unit
 
         val result = emailDataSource.sendEmail(request)
@@ -30,7 +31,7 @@ class EmailDataSourceTest {
 
     @Test
     fun `sendEmail should throw ResourceInternalServerException when JavaMailSender fails`() {
-        val request = NotificationRequest("user@example.com", "pending", "New Notification")
+        val request = NotificationRequest("user@example.com", Status.PENDING, "New Notification", "message")
         every { javaMailSender.send(any<SimpleMailMessage>()) } throws Exception("Failed to send email")
 
         val exception = assertThrows<ResourceInternalServerException> {

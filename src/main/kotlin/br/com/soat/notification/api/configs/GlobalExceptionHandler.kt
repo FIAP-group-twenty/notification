@@ -1,6 +1,6 @@
 package br.com.soat.notification.api.configs;
 
-import br.com.soat.notification.core.exceptions.ResourceBadRequestException
+import br.com.soat.notification.infrastructure.exceptions.ResourceBadRequestException
 import br.com.soat.notification.infrastructure.api.entities.ErrorResponse
 import br.com.soat.notification.infrastructure.exceptions.ResourceInternalServerException
 import org.springframework.http.HttpStatus

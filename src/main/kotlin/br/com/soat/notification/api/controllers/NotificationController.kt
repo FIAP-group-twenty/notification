@@ -1,8 +1,7 @@
 package br.com.soat.notification.api.controllers
 
-import br.com.soat.notification.core.entities.Notification
 import br.com.soat.notification.core.entities.NotificationRequest
-import br.com.soat.notification.core.exceptions.ResourceBadRequestException
+import br.com.soat.notification.infrastructure.exceptions.ResourceBadRequestException
 import br.com.soat.notification.core.usecases.SendEmailUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.CREATED
