@@ -12,19 +12,19 @@ plugins {
 group = "br.com.soat"
 version = "0.0.1-SNAPSHOT"
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = " br.com.soat.notification.NotificationApplication"
     }
-}
-
-jacoco {
-    toolVersion = "0.8.8"
 }
 
 repositories {
     mavenCentral()
     gradlePluginPortal()
+}
+
+jacoco {
+    toolVersion = "0.8.8"
 }
 
 dependencies {
@@ -34,15 +34,24 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 
+    compileOnly("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("com.mysql:mysql-connector-j")
 
+    //Test
+    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("org.springframework:spring-context-support:6.0.11")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("io.mockk:mockk:1.12.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testImplementation("org.springframework:spring-beans:6.0.11")
+}
 
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 kotlin {
@@ -70,20 +79,20 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
 }
 
 tasks.test {
-    finalizedBy(tasks.jacocoTestReport)
     useJUnitPlatform()
+
+    finalizedBy(tasks.jacocoTestReport)
     testLogging {
         events("passed", "failed", "skipped")
     }
     reports {
         junitXml.required.set(true)
         junitXml.outputLocation.set(file("${project.projectDir}/test-results/test"))
-        junitXml.setDestination(file("${project.projectDir}/test-results/test"))
         html.required.set(true)
         html.outputLocation.set(file("${project.projectDir}/test-results/test"))
     }
