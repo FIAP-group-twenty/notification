@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
@@ -49,6 +51,48 @@ kotlin {
     }
 }
 
+sonarqube {
+    properties {
+        property ("sonar.projectKey", "group-twenty_notification-service")
+        property ("sonar.organization", "group-twenty")
+        property ("sonar.host.url", project.findProperty("SONAR_HOST_URL") ?: "")
+        property("sonar.login", project.findProperty("SONAR_TOKEN") ?: "")
+        property("sonar.kotlin.language.level", "1.9")
+        property("sonar.sources", "src/main/kotlin")
+        property("sonar.tests", "src/test/kotlin")
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "failed", "skipped")
+    }
+    reports {
+        junitXml.required.set(true)
+        junitXml.outputLocation.set(file("${project.projectDir}/test-results/test"))
+        junitXml.setDestination(file("${project.projectDir}/test-results/test"))
+        html.required.set(true)
+        html.outputLocation.set(file("${project.projectDir}/test-results/test"))
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        html.outputLocation.set(file("${project.projectDir}/reports/jacoco"))
+    }
 }
