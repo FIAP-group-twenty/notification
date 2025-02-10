@@ -13,7 +13,7 @@
 # CONFIGURATIONS FOR BUILD AND DEPLOY
 # -----------------------------------
 
-FROM gradle:latest AS builder
+FROM gradle:8.4-jdk17 AS builder
 
 WORKDIR /app
 
