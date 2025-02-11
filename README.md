@@ -4,7 +4,7 @@ Este micro-serviço é projetado para gerenciar produtos de ofertados por uma la
 
 ## Desenho da arquitetura
 
-<img src="/arquitetura.png">
+<img src="/arquitetura.webp">
 
 ## Evidência de integração com o Sonarqube
 <img src="/sonarqube-notification.png">
